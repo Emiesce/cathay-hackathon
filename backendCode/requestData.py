@@ -6,17 +6,20 @@ except ImportError:
     
 
 APIKey = myAPIkey()
+mappings = {
+  "customers": ["details", "bagallowance", "regulatoryrequirements"],
+  "flights": ["seatmaps", ""]
+}
 
-def format(type, id, section):
-    return f"https://developers.cathaypacific.com/hackathon-apigw/hackathon-middleware/v1/airport/{type}/{id}/{section}"
+id = ["6NX8PT", "6I4CKI", "6I4BVT", "6JMJ7I", "6JLWEK", "6JM64U", "6JO9DL", "6JOQ3B", "6JVTAO"]
 
+def format(category, id, infotype):
+    return f"https://developers.cathaypacific.com/hackathon-apigw/hackathon-middleware/v1/airport/{category}/{id}/{infotype}"
 
-mappings = {"details":"customers", "bagallowance":"customers", "regulatoryrequirements": "customers", "seatmaps":"flights", "":"flights"}
-id = ["6NX8PT","6I4CKI","6I4BVT","6JMJ7I","6JLWEK","6JM64U","6JO9DL","6JOQ3B","6JVTAO"]
-
-text = format(mappings[""],id[1],"")
-os.system(f" curl -X 'GET' \
-  '{text}' \
-  -H 'accept: application/json' \
-  -H 'apiKey:  {APIKey}' > output.json")
+def getjson(category, id, infotype, jsonfile):
+  text = format(category, id, infotype)
+  os.system(f" curl -X 'GET' \
+    '{text}' \
+    -H 'accept: application/json' \
+    -H 'apiKey:  {APIKey}' > {jsonfile}")
 
