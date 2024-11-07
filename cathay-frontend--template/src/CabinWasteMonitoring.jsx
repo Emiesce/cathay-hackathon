@@ -16,7 +16,7 @@ const binStyles = {
     transition: 'background-color 0.3s',
     position: 'relative',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
-    marginBottom: '16px', // Increased margin between progress bars
+    marginBottom: '16px',
   },
   title: {
     marginBottom: '8px',
@@ -66,8 +66,8 @@ const CabinWasteMonitor = () => {
   }, []);
 
   const [flightInfo, setFlightInfo] = useState({
-    destination: 'New York',
-    flightNumber: 'XY123',
+    destination: 'Tokyo (HND)',
+    flightNumber: 'UO622',
     duration: initialDurationInSeconds,
     date: new Date().toLocaleDateString(),
   });

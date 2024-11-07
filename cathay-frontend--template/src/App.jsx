@@ -1,14 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import CabinWasteMonitor from './CabinWasteMonitoring'; // Adjust the path as necessary
-import FinishedFlights from './FlightHistory'; // Create this component for finished flights
-import Header from './Header'; // Import the Header component
-import WasteOptimization from './WasteOptimization'; // Import the new component
+import CabinWasteMonitor from './CabinWasteMonitoring';
+import FinishedFlights from './FlightHistory';
+import Header from './Header';
+import WasteOptimization from './WasteOptimization';
 
 const App = () => {
-  // Example flight and destination (replace with actual logic)
-  const flight = "XY123";
-  const destination = "New York";
+  const flight = "UO622";
+  const destination = "Tokyo (HND)";
 
   return (
     <Router>

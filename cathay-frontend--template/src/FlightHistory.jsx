@@ -5,20 +5,20 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 
 const flightsData = {
-  XY123: {
-    destination: 'New York',
+  UO622: {
+    destination: 'Tokyo (HND)',
     flights: [
       {
         date: '2024-10-01',
         status: 'Finished',
-        waste: { recyclable: 10, compostable: 5, general: 15 },
-        accumulationData: [0, 5, 10, 15, 20],
+        waste: { recyclable: 20, compostable: 10, general: 30 },
+        accumulationData: [0, 15, 30, 45, 60, 75, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]
       },
       {
         date: '2024-10-02',
         status: 'Finished',
-        waste: { recyclable: 8, compostable: 4, general: 12 },
-        accumulationData: [0, 6, 10, 14, 18],
+        waste: { recyclable: 20, compostable: 10, general: 30 },
+        accumulationData: [0, 15, 30, 45, 60, 75, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360]
       },
     ],
   },
@@ -65,12 +65,12 @@ const FinishedFlights = () => {
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" align="center" gutterBottom>
+      <Typography variant="h4" align="center" gutterBottom sx={{marginY: 2}}>
         Finished Flights for {selectedFlightNumber}
       </Typography>
 
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-      <InputLabel sx={{ marginBottom: 1}}>Select Flight Number</InputLabel>
+      <InputLabel sx = {{marginBottom: 1}}>Select Flight Number</InputLabel>
         <FormControl fullWidth>
           <Select
             value={selectedFlightNumber}
@@ -110,7 +110,7 @@ const FinishedFlights = () => {
               <Box sx={{ height: '150px', width: '100%', marginTop: 2 }}>
                 <Line
                   data={{
-                    labels: ['Start', '10min', '20min', '30min', 'Finish'],
+                    labels: ['0min', '30min', '1hr', '1.5hr', '2hr', '2.5hr', '3hr', '3.5hr', '4hr', '4.5hr'],
                     datasets: [
                       {
                         label: 'Trash Accumulation (kg)',
@@ -133,7 +133,7 @@ const FinishedFlights = () => {
                       y: {
                         beginAtZero: true,
                         ticks: {
-                          stepSize: 5,
+                          stepSize: 10,
                         },
                       },
                     },

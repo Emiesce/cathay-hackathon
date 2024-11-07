@@ -1,29 +1,3 @@
-// import React from 'react';
-// import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-// import { Link } from 'react-router-dom';
-
-// const Header = () => {
-//   return (
-//     <AppBar position="static" sx={{ backgroundColor: '#ffffff' }}>
-//       <Toolbar>
-//         <img src="./public/HK_Express_Logo_(2023).svg" alt="Logo" style={{ height: '40px', marginRight: '16px' }} />
-//         <Typography variant="h6" sx={{ flexGrow: 1, color: '#6a0dad' }}>
-//           Cabin Waste Monitor
-//         </Typography>
-//         <Button component={Link} to="/" color="primary">
-//           Home
-//         </Button>
-//         <Button component={Link} to="/finished-flights/XY123" color="primary">
-//           Finished Flights
-//         </Button>
-//       </Toolbar>
-//     </AppBar>
-//   );
-// };
-
-// export default Header;
-
-// Header.jsx
 import React, { useState } from 'react';
 import {
   AppBar,
@@ -87,7 +61,7 @@ const Header = () => {
               <MenuItem onClick={handleMenuClose} component={Link} to="/">
                 Home
               </MenuItem>
-              <MenuItem onClick={handleMenuClose} component={Link} to="/finished-flights/XY123">
+              <MenuItem onClick={handleMenuClose} component={Link} to="/finished-flights/UO622">
                 Finished Flights
               </MenuItem>
               <MenuItem onClick={handleMenuClose} component={Link} to="/waste-optimization">
@@ -114,7 +88,7 @@ const Header = () => {
             </Button>
             <Button
               component={Link}
-              to="/finished-flights/XY123"
+              to="/finished-flights/UO622"
               variant="contained"
               sx={{
                 marginLeft: 2,

@@ -1,9 +1,7 @@
-// WasteOptimization.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
-  TextField,
   Button,
   Paper,
   Grid,
@@ -14,9 +12,9 @@ import {
 } from '@mui/material';
 
 const flightsData = [
-  { flightNumber: 'XY123', destination: 'New York' },
-  { flightNumber: 'XY456', destination: 'Los Angeles' },
-  { flightNumber: 'XY789', destination: 'Chicago' },
+  { flightNumber: 'XY123', destination: 'New York', date: '2024-10-01' },
+  { flightNumber: 'XY456', destination: 'Los Angeles', date: '2024-10-02' },
+  { flightNumber: 'XY789', destination: 'Chicago', date: '2024-10-03' }, // Today's flight
 ];
 
 const employeesData = [
@@ -28,8 +26,7 @@ const employeesData = [
 ];
 
 const WasteOptimization = () => {
-  const [landingTime, setLandingTime] = useState('');
-  const [selectedFlight, setSelectedFlight] = useState(flightsData[0]);
+  const [selectedFlight, setSelectedFlight] = useState(flightsData[2]); // Default to today's flight
   const [estimatedWaste, setEstimatedWaste] = useState({});
   const [resources, setResources] = useState({ employees: [], equipment: [] });
 
@@ -66,22 +63,13 @@ const WasteOptimization = () => {
               setSelectedFlight(flight);
             }}
           >
-            {flightsData.map((flight) => (
+            {flightsData.filter(flight => flight.date === '2024-10-03').map((flight) => (
               <MenuItem key={flight.flightNumber} value={flight.flightNumber}>
                 {flight.flightNumber} - {flight.destination}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
-        <Typography variant="h6">Enter Estimated Landing Time:</Typography>
-        <TextField
-          label="Estimated Landing Time"
-          type="datetime-local"
-          value={landingTime}
-          onChange={(e) => setLandingTime(e.target.value)}
-          fullWidth
-          sx={{ marginBottom: 2 }}
-        />
         <Button variant="contained" color="primary" onClick={handleEstimate}>
           Estimate Waste and Resources
         </Button>
