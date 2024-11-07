@@ -1,4 +1,3 @@
-// CabinWasteMonitor.jsx
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, Paper, LinearProgress } from '@mui/material';
 import { Line } from 'react-chartjs-2';
