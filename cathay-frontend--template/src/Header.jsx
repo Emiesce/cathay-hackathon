@@ -90,6 +90,9 @@ const Header = () => {
               <MenuItem onClick={handleMenuClose} component={Link} to="/finished-flights/XY123">
                 Finished Flights
               </MenuItem>
+              <MenuItem onClick={handleMenuClose} component={Link} to="/waste-optimization">
+                Waste Optimization
+            </MenuItem>
             </Menu>
           </>
         ) : (
@@ -123,6 +126,9 @@ const Header = () => {
               }}
             >
               Finished Flights
+            </Button>
+            <Button component={Link} to="/waste-optimization" variant="contained" sx={{ marginLeft: 2 }}>
+                Waste Optimization
             </Button>
           </Box>
         )}
