@@ -57,32 +57,27 @@ X = getX(sampleData) #(N,19)
 
 trainX, testX, trainY, testY = train_test_split(X, Y, test_size=0.2, random_state=65)
 
-trainX, trainY = datasets.load_axis(return_X_y=True)
-
-trainX = trainX[:, np.newaxis, 2]
-
-axis_X_train = trainX[:-20]
-axis_X_test = trainX[-20:]
-
-axis_Y_train = trainY[:-20]
-axis_Y_test = trainY[-20:]
-
 regr = linear_model.LinearRegression()
 
-regr.fit(axis_X_train, axis_y_train)
+regr.fit(trainX, trainY)
 
-axis_y_pred = regr.predict(axis_X_test)
+predY = regr.predict(testX)
 
-print("Coefficients: \n", regr.coef_)
+fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+target_names = ['Trash at t=5', 'Workforce Needed', 'Special Equipment']
 
-print("Mean squared error: %.4f" % mean_squared_error(axis_y_test, axis_y_pred))
+for i in range(3):
+    axes[i].scatter(testX[:, 0], testY[:, i], color='black', label='Actual')
+    axes[i].scatter(testX[:, 0], predY[:, i], color='blue', label='Predicted')
+    axes[i].set_title(f'Predictions for {target_names[i]}')
+    axes[i].set_xlabel('Max Weight Capacity')
+    axes[i].set_ylabel(target_names[i])
+    axes[i].legend()
 
-print("Coefficient of determination: %.4f" % r2_score(axis_y_test, axis_y_pred))
-
-plt.scatter(axis_X_test, axis_y_test, color="black")
-plt.plot(axis_X_test, axis_y_pred,color="blue", linewidth = 3)
-
-plt.xticks(())
-plt.yticks(())
-
+plt.tight_layout()
 plt.show()
+
+for i in range(3):
+    print(f"\nMetrics for {target_names[i]}:")
+    print(f"Mean squared error: {mean_squared_error(testY[:, i], predY[:, i]):.4f}")
+    print(f"R² score: {r2_score(testY[:, i], predY[:, i]):.4f}")
