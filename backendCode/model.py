@@ -57,15 +57,15 @@ X = getX(sampleData) #(N,19)
 
 trainX, testX, trainY, testY = train_test_split(X, Y, test_size=0.2, random_state=65)
 
-axis_X, axis_y = datasets.load_axis(return_X_y=True)
+trainX, trainY = datasets.load_axis(return_X_y=True)
 
-axis_X = axis_X[:, np.newaxis, 2]
+trainX = trainX[:, np.newaxis, 2]
 
-axis_X_train = axis_X[:-20]
-axis_X_test = axis_y[-20:]
+axis_X_train = trainX[:-20]
+axis_X_test = trainX[-20:]
 
-axis_y_train = axis_y[:-20]
-axis_y_test = axis_y[-20:]
+axis_Y_train = trainY[:-20]
+axis_Y_test = trainY[-20:]
 
 regr = linear_model.LinearRegression()
 
