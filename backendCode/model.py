@@ -66,18 +66,7 @@ predY = regr.predict(testX)
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 target_names = ['Trash at t=5', 'Workforce Needed', 'Special Equipment']
 
-for i in range(3):
-    axes[i].scatter(testX[:, 0], testY[:, i], color='black', label='Actual')
-    axes[i].scatter(testX[:, 0], predY[:, i], color='blue', label='Predicted')
-    axes[i].set_title(f'Predictions for {target_names[i]}')
-    axes[i].set_xlabel('Max Weight Capacity')
-    axes[i].set_ylabel(target_names[i])
-    axes[i].legend()
+retdict = {"compostable": predY[0,0], "recyclable": predY[0,1], "trash": predY[0,2], "workforceNeeded": int(predY[0,3]), "specialEquipmentNeeded": int(predY[0,4])}
 
-plt.tight_layout()
-plt.show()
-
-for i in range(3):
-    print(f"\nMetrics for {target_names[i]}:")
-    print(f"Mean squared error: {mean_squared_error(testY[:, i], predY[:, i]):.4f}")
-    print(f"R² score: {r2_score(testY[:, i], predY[:, i]):.4f}")
+with open('prediction.json', 'w') as f:
+    json.dump(retdict, f)
