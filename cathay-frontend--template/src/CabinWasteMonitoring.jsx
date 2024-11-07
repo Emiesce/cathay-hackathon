@@ -101,7 +101,7 @@ const CabinWasteMonitor = () => {
   };
 
   return (
-    <Box sx={{ padding: 2, backgroundColor: '#ffffff', minHeight: '100vh' }}>
+    <Box sx={{ padding: 2, backgroundColor: '#ffffff', minHeight: '100vh', marginTop: 2}}>
       <Typography variant="h4" align="center" gutterBottom sx={{ color: '#6a0dad' }}>
         Cabin Waste Monitoring
       </Typography>
