@@ -66,7 +66,7 @@ predY = regr.predict(testX)
 fig, axes = plt.subplots(1, 3, figsize=(15, 5))
 target_names = ['Trash at t=5', 'Workforce Needed', 'Special Equipment']
 
-retdict = {"compostable": predY[0,0], "recyclable": predY[0,1], "trash": predY[0,2], "workforceNeeded": int(predY[0,3]), "specialEquipmentNeeded": int(predY[0,4])}
+retdict = {"compostable": predY[0:3,0].tolist(), "recyclable": predY[0:3,1].tolist(), "trash": predY[0:3,2].tolist(), "workforceNeeded": predY[0:3,3].astype(int).tolist(), "specialEquipmentNeeded": predY[0:3,4].astype(int).tolist()}
 
 with open('prediction.json', 'w') as f:
     json.dump(retdict, f)
