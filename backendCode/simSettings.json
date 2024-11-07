@@ -1,7 +1,7 @@
 {
     "numAirplane": {
-        "min": 4,
-        "max": 10
+        "min": 100,
+        "max": 100
     },
     "numCities":{
         "min": 3,

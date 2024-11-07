@@ -15,26 +15,29 @@ def trashIncrease(trashWeight: int, Capacity: int) -> int:
 
 
 # fixed var for one iteration
-AirLineInfo = {}
-numAirplaneJourneys = randint(settings["numAirplane"]["min"], settings["numAirplane"]["max"])
-numCities = randint(settings["numCities"]["min"], settings["numCities"]["max"])
-for i in range(numAirplaneJourneys):
-    AirLineInfo[i] = {}
-    AirLineInfo[i]["journey"] = [choice(range(numCities)) for _ in range(2)]
-    AirLineInfo[i]["flightTime"] = randint(settings["flightTime"]["min"], settings["flightTime"]["max"])
-    AirLineInfo[i]["workerNeeded"] = randint(settings["wokersAvailable"]["min"], settings["wokersAvailable"]["max"])
-    AirLineInfo[i]["specialEquipmentNeeded"] = randint(settings["equipmentAvailable"]["min"], settings["equipmentAvailable"]["max"])
-    AirLineInfo[i]["maxWeightCapacity"] = randint(settings["maxWeightCapacityPerAirplane"]["min"], settings["maxWeightCapacityPerAirplane"]["max"])
-    AirLineInfo[i]["trashCollection"] = {0: [0, 0, 0] }
-    for time in range(1,AirLineInfo[i]["flightTime"]+1):
-        prevWeight = AirLineInfo[i]["trashCollection"][time-1]
-        AirLineInfo[i]["trashCollection"][time] = trashIncrease(prevWeight, AirLineInfo[i]["maxWeightCapacityPerAirplane"])
+def generateData():
+    AirplaneInfo = {}
+    numAirplaneJourneys = randint(settings["numAirplane"]["min"], settings["numAirplane"]["max"])
 
-# whole data structure    
-data = {
-    'numberOfAirplanes': numAirplaneJourneys,
-    "AirLineInfo": AirLineInfo
-} 
+    for i in range(numAirplaneJourneys):
+        AirplaneInfo[i] = {}
+        AirplaneInfo[i]["workerNeeded"] = randint(settings["wokersAvailable"]["min"], settings["wokersAvailable"]["max"])
+        AirplaneInfo[i]["specialEquipmentNeeded"] = randint(settings["equipmentAvailable"]["min"], settings["equipmentAvailable"]["max"])
+        AirplaneInfo[i]["maxWeightCapacity"] = randint(settings["maxWeightCapacityPerAirplane"]["min"], settings["maxWeightCapacityPerAirplane"]["max"])
+        AirplaneInfo[i]["trashCollection"] = {0: [0, 0, 0] }
+        
+        for time in range(1,6):
+            prevWeight = AirplaneInfo[i]["trashCollection"][time-1]
+            AirplaneInfo[i]["trashCollection"][time] = trashIncrease(prevWeight, AirplaneInfo[i]["maxWeightCapacity"])
 
-with open('sampleData.json', 'w') as f:
-    json.dump(data, f, indent = 4)
+    # whole data structure    
+    data = {
+        'numberOfAirplanes': numAirplaneJourneys,
+        'flightTime': 5,
+        "AirplaneInfo": AirplaneInfo
+    } 
+
+    with open('sampleData.json', 'w') as f:
+        json.dump(data, f, indent = 4)
+    
+    return data
