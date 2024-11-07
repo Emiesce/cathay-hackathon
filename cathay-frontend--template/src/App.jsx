@@ -1,15 +1,18 @@
-// App.jsx
 import React from 'react';
-import { CssBaseline } from '@mui/material';
-import CabinWasteMonitor from './CabinWasteMonitoring';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CabinWasteMonitor from './CabinWasteMonitoring'; // Adjust the path as necessary
+import FinishedFlights from './FlightHistory'; // Create this component for finished flights
 
 const App = () => {
   return (
-    <div>
-      <CssBaseline />
-      <CabinWasteMonitor />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<CabinWasteMonitor />} />
+        <Route path="/finished-flights/:flightNumber" element={<FinishedFlights />} /> {/* Route with parameter */}
+      </Routes>
+    </Router>
   );
 };
+
 
 export default App;

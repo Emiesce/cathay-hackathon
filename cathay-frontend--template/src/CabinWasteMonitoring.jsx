@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, Paper, LinearProgress } from '@mui/material';
 import { Line } from 'react-chartjs-2';
+import { useNavigate } from 'react-router-dom';
 import 'chart.js/auto';
 
 const binStyles = {
@@ -16,6 +17,7 @@ const binStyles = {
     transition: 'background-color 0.3s',
     position: 'relative',
     boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+    marginBottom: '16px', // Increased margin between progress bars
   },
   title: {
     marginBottom: '8px',
@@ -36,8 +38,8 @@ const CabinWasteMonitor = () => {
   const initialDurationInSeconds = 2 * 60 * 60; // 2 hours
   const [bins, setBins] = useState([
     { type: 'Recyclable', weight: 10, capacity: 30 },
-    { type: 'Compostable', weight: 5, capacity: 20 },
-    { type: 'General Waste', weight: 15, capacity: 40 },
+    { type: 'Compostable', weight: 18, capacity: 20 },
+    { type: 'General Waste', weight: 35, capacity: 40 },
   ]);
 
   const [graphData, setGraphData] = useState({
@@ -53,11 +55,25 @@ const CabinWasteMonitor = () => {
     ],
   });
 
+  // Ensure graph data always increases
+  useEffect(() => {
+    setGraphData((prevData) => {
+      const newData = [...prevData.datasets[0].data];
+      for (let i = 1; i < newData.length; i++) {
+        newData[i] = Math.max(newData[i - 1] + Math.floor(Math.random() * 5) + 1, newData[i]);
+      }
+      return { ...prevData, datasets: [{ ...prevData.datasets[0], data: newData }] };
+    });
+  }, []);
+
   const [flightInfo, setFlightInfo] = useState({
     destination: 'New York',
     flightNumber: 'XY123',
     duration: initialDurationInSeconds,
+    date: new Date().toLocaleDateString(),
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -81,6 +97,10 @@ const CabinWasteMonitor = () => {
     return arrivalTime.toLocaleTimeString();
   };
 
+  const handleFlightNumberClick = () => {
+    navigate(`/finished-flights/${flightInfo.flightNumber}`); // Pass the flight number in the URL
+  };
+
   return (
     <Box sx={{ padding: 2, backgroundColor: '#ffffff', minHeight: '100vh' }}>
       <Typography variant="h4" align="center" gutterBottom sx={{ color: '#6a0dad' }}>
@@ -93,11 +113,18 @@ const CabinWasteMonitor = () => {
         <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
           Destination: {flightInfo.destination}
         </Typography>
-        <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+        <Typography
+          variant="body1"
+          sx={{ fontWeight: 'bold', cursor: 'pointer', color: '#6a0dad' }}
+          onClick={handleFlightNumberClick}
+        >
           Flight Number: {flightInfo.flightNumber}
         </Typography>
         <Typography variant="body1">
           Duration: {formatDuration(flightInfo.duration)}
+        </Typography>
+        <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+          Date: {flightInfo.date}
         </Typography>
         <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
           Estimated Arrival: {estimatedArrival()}
@@ -106,12 +133,14 @@ const CabinWasteMonitor = () => {
       <Grid container spacing={2}>
         {bins.map((bin, index) => {
           const fillPercentage = (bin.weight / bin.capacity) * 100;
+          const isFlashing = fillPercentage > 75; // Determine if the bin should flash
           return (
             <Grid item xs={12} sm={4} key={index}>
               <Box
                 sx={{
                   ...binStyles.bin,
                   backgroundColor: getColor(fillPercentage),
+                  animation: isFlashing ? 'flashing 1s infinite' : 'none', // Flash effect when red
                 }}
               >
                 <LinearProgress
@@ -119,13 +148,11 @@ const CabinWasteMonitor = () => {
                   value={fillPercentage}
                   sx={{
                     width: '100%',
-                    height: '12px', // Increased height for bolder appearance
                     borderRadius: '5px',
                     position: 'absolute',
-                    paddingTop: '10px',
-                    bottom: '5px',
+                    marginTop: '10px',
+                    bottom: '10px',
                     left: '0',
-                    ...(fillPercentage > 75 && { animation: 'flash 1s infinite' }),
                   }}
                 />
                 <Typography variant="h6" sx={binStyles.title}>
@@ -162,10 +189,19 @@ const CabinWasteMonitor = () => {
         <Typography variant="h6" gutterBottom sx={{ color: '#6a0dad', fontWeight: 'bold' }}>
           Trash Collection Over Time
         </Typography>
-        <Box sx={{ height: '300px' }}> {/* Make the graph smaller */}
+        <Box sx={{ height: '250px' }}>
           <Line data={graphData} options={{ responsive: true, maintainAspectRatio: false }} />
         </Box>
       </Paper>
+      <style>
+        {`
+          @keyframes flashing {
+            0% { background-color: #d9534f; }
+            50% { background-color: #f0ad4e; }
+            100% { background-color: #d9534f; }
+          }
+        `}
+      </style>
     </Box>
   );
 };
